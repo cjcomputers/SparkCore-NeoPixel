@@ -100,6 +100,7 @@ void Adafruit_NeoPixel::show(void) {
     case WS2812B: // WS2812 & WS2812B = 50us reset pulse
     case WS2812B2:
     case WS2811: // WS2811 = 50us reset pulse
+    case WS2811GRB: // WS2811 = 50us reset pulse
     default:     // default = 50us reset pulse
       wait_time = 50L;
       break;
@@ -841,6 +842,11 @@ void Adafruit_NeoPixel::setPixelColor(
         *p++ = b;
         *p = g;
         break;
+      case WS2811GRB: // WS2811 is GRB order
+      	*p++ = g;
+        *p++ = r;
+        *p = b;
+        break;
       case WS2811: // WS2811 is RGB order
       case TM1803: // TM1803 is RGB order
       default:     // default is RGB order
@@ -877,6 +883,11 @@ void Adafruit_NeoPixel::setPixelColor(uint16_t n, uint32_t c) {
         *p++ = r;
         *p++ = b;
         *p = g;
+        break;
+      case WS2811GRB: // WS2811 is RGB order
+      	*p++ = g;
+        *p++ = r;
+        *p = b;
         break;
       case WS2811: // WS2811 is RGB order
       case TM1803: // TM1803 is RGB order
@@ -930,6 +941,8 @@ uint32_t Adafruit_NeoPixel::getPixelColor(uint16_t n) const {
     case TM1829: // TM1829 is special RBG order
       c = ((uint32_t)p[0] << 16) | ((uint32_t)p[2] <<  8) | (uint32_t)p[1];
       break;
+    case WS2811GRB: // WS2811 is GRB order
+      c = ((uint32_t)p[1] << 16) | ((uint32_t)p[0] <<  8) | (uint32_t)p[2];
     case WS2811: // WS2811 is RGB order
     case TM1803: // TM1803 is RGB order
     default:     // default is RGB order
