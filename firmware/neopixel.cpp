@@ -100,7 +100,7 @@ void Adafruit_NeoPixel::show(void) {
     case WS2812B: // WS2812 & WS2812B = 50us reset pulse
     case WS2812B2:
     case WS2811: // WS2811 = 50us reset pulse
-    case WS2811GRB: // WS2811 = 50us reset pulse
+    case WS2811GBR: // WS2811 = 50us reset pulse
     default:     // default = 50us reset pulse
       wait_time = 50L;
       break;
@@ -417,13 +417,13 @@ void Adafruit_NeoPixel::show(void) {
       } while ( ++j < 24 ); // ... pixel done
     } // end while(i) ... no more pixels
   }
-  else if(type == WS2811GRB) { // WS2811, 400 KHz bitstream
+  else if(type == WS2811GBR) { // WS2811, 400 KHz bitstream
     while(i) { // While bytes left... (3 bytes = 1 pixel)
       mask = 0x800000; // reset the mask
       i = i-3;      // decrement bytes remaining
       g = *ptr++;   // Next red byte value
-      r = *ptr++;   // Next green byte value
-      b = *ptr++;   // Next blue byte value
+      b = *ptr++;   // Next green byte value
+      r = *ptr++;   // Next blue byte value
       c = ((uint32_t)r << 16) | ((uint32_t)g <<  8) | b; // Pack the next 3 bytes to keep timing tight
       j = 0;        // reset the 24-bit counter
       do {
@@ -842,10 +842,10 @@ void Adafruit_NeoPixel::setPixelColor(
         *p++ = b;
         *p = g;
         break;
-      case WS2811GRB: // WS2811 is GRB order
+      case WS2811GBR: // WS2811 is GRB order
       	*p++ = g;
-        *p++ = r;
-        *p = b;
+        *p++ = b;
+        *p = r;
         break;
       case WS2811: // WS2811 is RGB order
       case TM1803: // TM1803 is RGB order
@@ -884,10 +884,10 @@ void Adafruit_NeoPixel::setPixelColor(uint16_t n, uint32_t c) {
         *p++ = b;
         *p = g;
         break;
-      case WS2811GRB: // WS2811 is RGB order
+      case WS2811GBR: // WS2811 is RGB order
       	*p++ = g;
-        *p++ = r;
-        *p = b;
+        *p++ = b;
+        *p = r;
         break;
       case WS2811: // WS2811 is RGB order
       case TM1803: // TM1803 is RGB order
@@ -941,8 +941,8 @@ uint32_t Adafruit_NeoPixel::getPixelColor(uint16_t n) const {
     case TM1829: // TM1829 is special RBG order
       c = ((uint32_t)p[0] << 16) | ((uint32_t)p[2] <<  8) | (uint32_t)p[1];
       break;
-    case WS2811GRB: // WS2811 is GRB order
-      c = ((uint32_t)p[1] << 16) | ((uint32_t)p[0] <<  8) | (uint32_t)p[2];
+    case WS2811GBR: // WS2811 is GRB order
+      c = ((uint32_t)p[1] << 16) | ((uint32_t)p[2] <<  8) | (uint32_t)p[0];
     case WS2811: // WS2811 is RGB order
     case TM1803: // TM1803 is RGB order
     default:     // default is RGB order
