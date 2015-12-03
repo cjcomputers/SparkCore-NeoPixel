@@ -75,10 +75,6 @@ Adafruit_NeoPixel::~Adafruit_NeoPixel() {
   pinMode(pin, INPUT);
 }
 
-Adafruit_NeoPixel::Adafruit_NeoPixel() {
-  // Do nothing.
-}
-
 void Adafruit_NeoPixel::begin(void) {
   pinMode(pin, OUTPUT);
   digitalWrite(pin, LOW);
